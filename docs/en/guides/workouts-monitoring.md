@@ -34,37 +34,20 @@ Monitoring workouts through pose estimation with [Ultralytics YOLO11](https://gi
 | ![PushUps Counting](https://github.com/ultralytics/docs/releases/download/0/pushups-counting.avif) | ![PullUps Counting](https://github.com/ultralytics/docs/releases/download/0/pullups-counting.avif) |
 |                                          PushUps Counting                                          |                                          PullUps Counting                                          |
 
-!!! example "Workouts Monitoring Example"
+!!! example "Workouts Monitoring using YOLO11"
 
-    === "Workouts Monitoring"
+    === "CLI"
+        ```bash
+        yolo solutions workout show=True
 
-        ```python
-        import cv2
+        # pass the source
+        yolo solutions workout source="path/to/video/file.mp4"
 
-        from ultralytics import solutions
-
-        cap = cv2.VideoCapture("path/to/video/file.mp4")
-        assert cap.isOpened(), "Error reading video file"
-        w, h, fps = (int(cap.get(x)) for x in (cv2.CAP_PROP_FRAME_WIDTH, cv2.CAP_PROP_FRAME_HEIGHT, cv2.CAP_PROP_FPS))
-
-        gym = solutions.AIGym(
-            model="yolo11n-pose.pt",
-            show=True,
-            kpts=[6, 8, 10],
-        )
-
-        while cap.isOpened():
-            success, im0 = cap.read()
-            if not success:
-                print("Video frame is empty or video processing has been successfully completed.")
-                break
-            im0 = gym.monitor(im0)
-
-        cv2.destroyAllWindows()
+        # monitor pushups exercise
+        yolo solutions workout kpts=[6, 8, 10]
         ```
 
-    === "Workouts Monitoring with Save Output"
-
+    === "Python"
         ```python
         import cv2
 
